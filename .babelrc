@@ -1,0 +1,19 @@
+{
+  "presets": [
+    "react",
+    [
+      "env",
+      {
+        "targets": {
+          "uglify": true
+        },
+        "modules": false
+      }
+    ],
+    "stage-2"
+  ],
+  "plugins": [
+    "react-hot-loader/babel",
+    "syntax-dynamic-import"
+  ]
+}

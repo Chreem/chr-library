@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chreem</title>
+    <!--<link rel="stylesheet" href="//apps.bdimg.com/libs/animate.css/3.1.0/animate.min.css">-->
+    <link rel="stylesheet" href="//cdn.bootcss.com/csshake/1.5.3/csshake.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body,
+        #root {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #loading {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, .3);
+            z-index: 2018;
+            transition: all .3s linear;
+        }
+
+        #loading .zoom,
+        #loading .zoom * {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #loading .percent {
+            position: absolute;
+            z-index: 100;
+            line-height: 5rem;
+        }
+
+        #loading .zoom {
+            width: 5rem;
+            height: 5rem;
+        }
+
+        #loading .zoom .inner-circle {
+            z-index: 90;
+            border: 1.7rem solid white;
+            border-radius: 1.7rem;
+        }
+
+        @keyframes outer-circle-zoom {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(.8);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        #loading .zoom .outer-circle {
+            z-index: 80;
+            border: 3rem solid aqua;
+            border-radius: 3rem;
+            animation: outer-circle-zoom 1.3s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body>
+<div id="loading">
+    <div class="zoom">
+        <div class="percent"></div>
+        <div class="inner-circle"></div>
+        <div class="outer-circle"></div>
+    </div>
+</div>
+<script>
+    (function () {
+        function addPercent(p) {
+            var percent = this.percent;
+            var step = p || 5;
+            var newPercent = percent + step;
+            this.percent = newPercent > 99 ? 99 : newPercent;
+            return this.percent
+        }
+
+        window.loadingAction = {
+            percent: 0,
+            timer: null,
+
+            inc: function (p) {
+                this.set(addPercent.call(this, p));
+            },
+
+            set: function (p) {
+                if (!document.getElementById('loading')) return;
+                if (typeof p !== 'number') return;
+                this.percent = p;
+                document.querySelector('.percent').innerHTML = p + '%';
+                var loadingAction = this;
+                if (this.timer !== null) clearTimeout(this.timer);
+                this.timer = setTimeout(function () {
+                    // loadingAction.done();
+                }, 2000)
+            },
+
+            done: function () {
+                var loading = document.getElementById('loading');
+                if (!loading) return;
+                this.set(100);
+                loading.addEventListener('transitionend', function () {
+                    document.querySelector('body').removeChild(loading);
+                })
+                loading.style.opacity = 0;
+            }
+        }
+
+        window.loadingAction.set(0)
+        window.addEventListener('load', function () {
+            window.loadingAction.done();
+        })
+    })()
+</script>
+<!--<script ysft="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>-->
+<script>
+    window.WXCONTENT = {
+        img: "http://cdn.img.png",
+        link: 'xxx',
+        content: "分享内容",
+        title: "标题"
+    }
+</script>
+<div id="screen_tip" class="overlay">
+    <div class="model">横屏获以得更好的体验</div>
+</div>
+<div id="root">
+    <header></header>
+    <div class="content">
+        <nav>
+            <ul>
+                <li data-index="1">test1</li>
+                <li data-index="2">test2</li>
+                <li data-index="3">test3</li>
+                <li data-index="4">test4</li>
+            </ul>
+        </nav>
+        <div class="main-body">
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+            内容 <br>
+        </div>
+        <div class="nav-content">123</div>
+    </div>
+    <footer></footer>
+
+    <div class="popover">123</div>
+    <div class="popover" data-for="favorite_btn">
+        <div class="tip">test</div>
+        <div class="emoji">
+            <div class="star">※</div>
+            <div class="star">※</div>
+            <div class="star">※</div>
+            <div class="star">※</div>
+            <div class="star">※</div>
+        </div>
+    </div>
+    <button id="favorite_btn"></button>
+    <div id="to_top"></div>
+</div>
+</body>
+
+</html>

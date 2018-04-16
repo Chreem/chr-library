@@ -1,0 +1,22 @@
+@keyframes dropdown {
+  from {
+    top: -20%;
+  }
+  to {
+    top: 110%;
+  }
+}
+
+@keyframes translation {
+  to {
+    transform: translateX(0);
+  }
+}
+
+.drop-component {
+  position: absolute;
+  top: -10%;
+  animation-name: dropdown, translation;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}

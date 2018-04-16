@@ -1,0 +1,57 @@
+@keyframes blink {
+    80% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(1.5);
+    }
+}
+
+#loading {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, .3);
+    z-index: 2018;
+    transition: all .3s linear;
+}
+
+#loading .percent {
+    z-index: 100;
+}
+
+#loading .zoom {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loading .zoom .inner-circle {
+    z-index: 90;
+    border: 1.7rem solid white;
+    border-radius: 1.7rem;
+}
+
+@keyframes outer-circle-zoom {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(.8);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+#loading .zoom .outer-circle {
+    position: absolute;
+    z-index: 80;
+    border: 3rem solid aqua;
+    border-radius: 3rem;
+    animation: outer-circle-zoom 1.3s ease-in-out infinite;
+}
