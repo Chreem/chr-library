@@ -13,7 +13,6 @@ function generator({props, rules, type}) {
             };
 
             render() {
-                console.log(this.context);
                 const {getFieldDecorator} = this.context.form;
                 const {name, ...otherProps} = this.props;
 
