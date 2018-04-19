@@ -179,7 +179,7 @@ class Mix {
             use: ['css-loader', 'postcss-loader', 'less-loader']
         });
         const vueLoader = selfFoundLoader.call(this, 'a.vue');
-        vueLoader.options.extractCSS = true;
+        if (!!vueLoader) vueLoader.options.extractCSS = true;
         this.config.plugins.push(new ExtractTextPlugin('style.[hash:5].css'));
         if (!!publicPath) this.config.output.publicPath = publicPath;
         if (vendors.length >= 1) selfFormatVendors.call(this, vendors);
