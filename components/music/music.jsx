@@ -1,12 +1,10 @@
 import React from 'react'
 import './index.less'
-import on from './on.png'
-import off from './off.png'
 
 export default class Music extends React.Component {
     constructor(props) {
         super(props);
-        this.params = Object.assign({
+        Object.assign({
             // preload: true,
             autoPlay: true,
             loop: true,
@@ -18,7 +16,7 @@ export default class Music extends React.Component {
     }
 
     componentDidMount() {
-        const audio = this.refs.audio.querySelector('audio');
+        const audio = this.refs.audio.querySelector('audio.bgm');
         // dont work on chrome mobile
         // for ios? not try yet
         if (!!audio && !this.state.playing) {
@@ -29,7 +27,7 @@ export default class Music extends React.Component {
     }
 
     handlePlayError() {
-        const count = this.params.error;
+        const count = this.props.error;
         if (this.error > count) {
             const audio = this.refs.audio.querySelector('audio');
             this.refs.audio.removeChild(audio)
@@ -48,7 +46,7 @@ export default class Music extends React.Component {
         $(audio).removeClass('active');
 
         // if dont support loop
-        if (this.state.playing && this.params.loop) {
+        if (this.state.playing && this.props.loop) {
             const target = audio.querySelector('audio');
             if (!target) return;
             target.load();
@@ -65,10 +63,12 @@ export default class Music extends React.Component {
     }
 
     render() {
-        return <div className="music" ref="audio"
+        const {...otherProps} = this.props;
+        return <div className={this.state.playing ? 'music active' : 'music'} ref="audio"
                     onClick={this.handleAudioClick.bind(this)}>
-            <img src={this.state.playing ? on : off} alt="playing"/>
-            <audio {...this.params} onError={this.handlePlayError.bind(this)} onPlaying={this.handlePlaying.bind(this)}
+            <audio className="bgm" {...otherProps}
+                   onError={this.handlePlayError.bind(this)}
+                   onPlaying={this.handlePlaying.bind(this)}
                    onPause={this.handlePause.bind(this)}/>
         </div>
     }
