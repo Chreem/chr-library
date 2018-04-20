@@ -12,21 +12,40 @@ class Loading extends Component {
 export const routes = [
     {
         path: '/',
-        component: Loadable({loader: () => import('./layout/BaseLayout'), loading: Loading})
+        component: require('./layout/BaseLayout').default
     },
     {
         path: '/user',
-        component: Loadable({loader: () => import('./layout/UserLayout'), loading: Loading})
+        component: require('./layout/UserLayout').default
     }, {
         path: '/user/login',
         name: 'Login',
-        component: Loadable({loader: () => import('./routes/user/Login.jsx'), loading: Loading})
+        component: require('./routes/user/Login.jsx').default
     }, {
         path: '/user/register',
         name: 'Register',
-        component: Loadable({loader: () => import('./routes/user/Register.jsx'), loading: Loading})
+        component: require('./routes/user/Register.jsx').default
     }
 ];
+
+// export const routes = [
+//     {
+//         path: '/',
+//         component: Loadable({loader: () => import('./layout/BaseLayout'), loading: Loading})
+//     },
+//     {
+//         path: '/user',
+//         component: Loadable({loader: () => import('./layout/UserLayout'), loading: Loading})
+//     }, {
+//         path: '/user/login',
+//         name: 'Login',
+//         component: Loadable({loader: () => import('./routes/user/Login.jsx'), loading: Loading})
+//     }, {
+//         path: '/user/register',
+//         name: 'Register',
+//         component: Loadable({loader: () => import('./routes/user/Register.jsx'), loading: Loading})
+//     }
+// ];
 
 export function getChildrenRoutes(path) {
     return routes.filter(item => {

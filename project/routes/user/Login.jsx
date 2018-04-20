@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import {createHashHistory} from 'history'
-import {Form, Icon, Input, Button, Checkbox} from 'antd';
+import {Form, Button, Checkbox} from 'antd';
 import User from '../../components/user'
 import {setAuthority} from '../../utils/authority'
 import './Login.less'
@@ -30,7 +30,9 @@ class Login extends React.Component {
                 console.log('try to login', values);
 
                 // 通过验证
-                if (this.state.remember) {console.log('set token')}
+                if (this.state.remember) {
+                    console.log('set token')
+                }
                 setAuthority('token' + (new Date()).getTime());
                 history.push('/');
             }

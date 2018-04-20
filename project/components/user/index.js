@@ -5,7 +5,7 @@ import items from './map.js'
 
 const FormItem = Form.Item;
 
-function generator({props, rules, type}) {
+function generator({props, rules: defaultRules, type}) {
     return Input => {
         class FormComponent extends Component {
             static contextTypes = {
@@ -14,10 +14,10 @@ function generator({props, rules, type}) {
 
             render() {
                 const {getFieldDecorator} = this.context.form;
-                const {name, ...otherProps} = this.props;
+                const {name, rules, ...otherProps} = this.props;
 
                 return <FormItem>
-                    {getFieldDecorator(name, {rules})(
+                    {getFieldDecorator(name, {rules: (rules ? rules : defaultRules)})(
                         <Input {...props} {...otherProps}/>
                     )}
                 </FormItem>
