@@ -10,20 +10,16 @@
 .music {
   position: absolute;
   z-index: 1000;
-  width: 3rem;
-  height: 3rem;
-  border: 0.2rem solid #8a8a8a;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 0.2rem solid black;
   border-radius: 5rem;
   display: flex;
-
-  img {
-    margin: auto;
-    display: block;
-    width: 2.5rem;
-    height: 2.5rem;
-  }
+  background-image: url(./off.png);
+  opacity: .6;
 
   &.active {
+    background-image: url(./on.png);
     animation: rotate 5s linear infinite;
   }
 }

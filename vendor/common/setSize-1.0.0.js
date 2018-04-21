@@ -2,15 +2,17 @@
  * 自动设置html的font-size
  */
 (function () {
-    function createTag(tag, options) {
+    function createTag(tag, options, content) {
         var newTag = document.createElement(tag);
         Object.keys(options).forEach(function (key) {
             newTag[key] = options[key]
         });
+        if (content) newTag.innerHTML = content;
         return newTag;
     }
 
-    function SetSize(options) {
+    function SetSize(opt) {
+        var options = opt || {};
         this.win = options.win || window;
         this.count = options.count || 32;
         this.maxWidth = options.width || 640;
@@ -33,7 +35,7 @@
         var scale = this.scale;
         var metaTag = document.querySelector('meta[name="viewport"]');
         var content = 'initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', width=device-width, user-scalable=no';
-        document.write('<style>body,input,textarea{font-size:' + 10 * screenRatio + 'px;}</style>');
+        document.head.appendChild(createTag('style', {}, 'body,input,textarea{font-size: 1rem;}'));
         if (!metaTag) document.head.appendChild(createTag('meta', {name: 'viewport', content: content}));
         else metaTag.content = content;
         this.maxWidth = screenRatio * this.maxWidth;
@@ -61,6 +63,6 @@
     };
 
     if (window) window.SetSize = SetSize;
-    if (typeof module === 'undefined') return;
+    if (typeof module === 'undefined') return new SetSize();
     if (module.exports) module.exports = SetSize;
 })();
