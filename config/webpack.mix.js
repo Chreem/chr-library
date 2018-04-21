@@ -60,6 +60,7 @@ class Mix {
             module: {
                 rules: [
                     {test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/},
+                    {test: /\.tsx?$/, loader: "awesome-typescript-loader"},
                     {test: /\.css$/, loader: ['style-loader', 'css-loader', 'postcss-loader']},
                     {test: /\.less$/, loader: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']},
                     {test: /\.mp3$/, loader: 'file-loader', options: {name: '[name].[ext]'}},
@@ -71,6 +72,7 @@ class Mix {
                 ]
             },
             resolve: {
+                extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
                 alias: {
                     '~components': path.resolve('./components'),
                     '~vendor': path.resolve('./vendor')
@@ -86,7 +88,16 @@ class Mix {
                 splitChunks: {
                     cacheGroups: {}
                 }
-            }
+            },
+
+            /**
+             * import操作会改变为从全局变量获取而不是node_modules里
+             * 用于相应CDN
+             */
+            // externals: {
+            //     "react": "React",
+            //     "react-dom": "ReactDOM"
+            // },
         };
 
         this.webpackConfig = this.webpackConfig.bind(this)

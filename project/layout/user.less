@@ -1,0 +1,21 @@
+@import "../index.less";
+
+#user_layout {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+  background-repeat: repeat;
+  background-size: 100%;
+  background-position: center center;
+  @media screen and(min-width: @phone-width) {
+    // svg thank for @antd
+    background-image: url(../assets/user-bg.svg);
+  }
+
+  .container {
+    width: 300px;
+    margin: auto;
+    flex: 1;
+    padding-top: 100px;
+  }
+}
