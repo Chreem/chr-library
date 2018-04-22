@@ -28,7 +28,13 @@ export default class extends React.Component {
                         <Redirect exact from="/user" to="/user/login"/>
                     </Switch>
                 </div>
-                <footer>footer</footer>
+                <footer>
+                    <div className="link">Find me</div>
+                    <div className="copyright">
+                        <span>Copyright</span>
+                        <a href="mailto:chreem@qq.com" className="author">Chreem</a>
+                    </div>
+                </footer>
             </div>
         </DocumentTitle>
     }

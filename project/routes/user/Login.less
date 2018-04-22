@@ -1,9 +1,13 @@
+@button-width: 45%;
+
 .login-container {
+  width: 300px;
+
   button {
-    width: 45%;
+    width: @button-width;
 
     &:last-child {
-      margin-left: 10%;
+      margin-left: 100% - @button-width*2;
     }
   }
 

@@ -1,5 +1,7 @@
 @import "../index.less";
 
+@max-width: 300px;
+
 #user_layout {
   display: flex;
   flex-flow: column;
@@ -13,9 +15,25 @@
   }
 
   .container {
-    width: 300px;
-    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     flex: 1;
-    padding-top: 100px;
+  }
+
+  footer {
+    width: @max-width;
+    display: block;
+    margin: auto;
+    padding: 20px 0;
+    font-size: 1rem;
+    text-align: center;
+
+    .copyright span:first-child {
+      &::after {
+        content: " © "
+      }
+    }
   }
 }

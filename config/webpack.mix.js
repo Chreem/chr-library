@@ -60,7 +60,8 @@ class Mix {
             module: {
                 rules: [
                     {test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/},
-                    {test: /\.tsx?$/, loader: "awesome-typescript-loader"},
+                    {test: /\.tsx?$/, loader: "ts-loader"},
+                    // {test: /\.tsx?$/, loader: "awesome-typescript-loader"},
                     {test: /\.css$/, loader: ['style-loader', 'css-loader', 'postcss-loader']},
                     {test: /\.less$/, loader: ['style-loader', 'css-loader', 'postcss-loader', 'less-loader']},
                     {test: /\.mp3$/, loader: 'file-loader', options: {name: '[name].[ext]'}},
@@ -72,7 +73,7 @@ class Mix {
                 ]
             },
             resolve: {
-                extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
+                extensions: ['*', '.js', '.jsx', '.less', '.ts', '.tsx'],
                 alias: {
                     '~components': path.resolve('./components'),
                     '~vendor': path.resolve('./vendor')

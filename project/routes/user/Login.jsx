@@ -11,12 +11,13 @@ const history = createHashHistory();
 const {UserName, Password} = User;
 
 class Login extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            remember: false
-        }
-    }
+    state = {
+        remember: false
+    };
+
+    static childContextTypes = {
+        form: PropTypes.object
+    };
 
     getChildContext() {
         return {form: this.props.form}
@@ -31,7 +32,7 @@ class Login extends React.Component {
 
                 // 通过验证
                 if (this.state.remember) {
-                    console.log('set token')
+                    console.log('set remember sign');
                 }
                 setAuthority('token' + (new Date()).getTime());
                 history.push('/');
@@ -60,9 +61,5 @@ class Login extends React.Component {
         </Form>
     }
 }
-
-Login.childContextTypes = {
-    form: PropTypes.object
-};
 
 export default Form.create()(Login)

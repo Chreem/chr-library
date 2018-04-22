@@ -20,11 +20,15 @@ export const routes = [
     }, {
         path: '/user/login',
         name: 'Login',
-        component: require('./routes/user/Login.jsx').default
+        component: require('./routes/user/Login').default
     }, {
         path: '/user/register',
         name: 'Register',
-        component: require('./routes/user/Register.jsx').default
+        component: require('./routes/user/Register').default
+    }, {
+        path: '/user/register-result',
+        name: 'Register-Result',
+        component: require('./routes/user/RegisterResult').default
     }
 ];
 
