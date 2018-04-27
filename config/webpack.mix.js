@@ -73,11 +73,11 @@ class Mix {
                 ]
             },
             resolve: {
-                extensions: ['*', '.js', '.jsx', '.less', '.ts', '.tsx'],
                 alias: {
                     '~components': path.resolve('./components'),
                     '~vendor': path.resolve('./vendor')
-                }
+                },
+                extensions: ['*', '.js', '.jsx', '.less', '.ts', '.tsx'],
             },
             plugins: [
                 new HtmlWebpackPlugin({
@@ -173,8 +173,14 @@ class Mix {
             host: 'localhost',
             port: 80,
             open: false,
-            proxy: 'http://localhost:8080'
+            proxy: 'http://localhost:8080',
+            // https: {
+                // key: path.resolve('D:/共享/开发/ca', './server.key'),
+                // cert: path.resolve('D:/共享/开发/ca', './server.crt'),
+                // ca: fs.readFileSync(path.resolve('D:/共享/开发/ca', './ca.crt')),
+            // }
         }, {reload: false}));
+
         return this.config;
     }
 
