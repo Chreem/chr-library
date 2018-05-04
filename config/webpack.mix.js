@@ -95,10 +95,11 @@ class Mix {
              * import操作会改变为从全局变量获取而不是node_modules里
              * 用于相应CDN
              */
-            // externals: {
-            //     "react": "React",
-            //     "react-dom": "ReactDOM"
-            // },
+            externals: {
+                // "three": "THREE",
+                // "react": "React",
+                // "react-dom": "ReactDOM"
+            },
         };
 
         this.webpackConfig = this.webpackConfig.bind(this)
@@ -130,6 +131,14 @@ class Mix {
             this.isReact = true;
         }
         selfAdd2Entry.apply(this, arguments);
+        return this;
+    }
+
+    lib(libs) {
+        if (libs.constructor !== Object) libs = {};
+        Object.keys(libs).forEach(key => {
+            this.config.externals[key] = libs[key];
+        });
         return this;
     }
 
@@ -175,9 +184,9 @@ class Mix {
             open: false,
             proxy: 'http://localhost:8080',
             // https: {
-                // key: path.resolve('D:/共享/开发/ca', './server.key'),
-                // cert: path.resolve('D:/共享/开发/ca', './server.crt'),
-                // ca: fs.readFileSync(path.resolve('D:/共享/开发/ca', './ca.crt')),
+            // key: path.resolve('D:/共享/开发/ca', './server.key'),
+            // cert: path.resolve('D:/共享/开发/ca', './server.crt'),
+            // ca: fs.readFileSync(path.resolve('D:/共享/开发/ca', './ca.crt')),
             // }
         }, {reload: false}));
 

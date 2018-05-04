@@ -1,4 +1,11 @@
-export type Point = { x: number, y: number };
+import * as $ from 'jquery'
+
+export type Point = {
+    id?: number,
+    x: number,
+    y: number,
+    [propName: string]: any;
+};
 export type Vector = { start: Point, direct: Point };
 
 type Callback<T, E=Event> = (type?: T, originEvent?: E) => void;
@@ -73,10 +80,15 @@ class CallbackManager {
 export class TouchGesture extends CallbackManager {
     private startPoint: Array<Point> = [];
 
+    private toArray(arr: any) {
+        return Array.prototype.slice.call(arr)
+    }
+
     private handleTouchStart(e: TouchEvent) {
         let len = e.touches.length;
         for (let i = 0; i < len; i++) {
             this.startPoint[i] = {
+                id: e.touches[i].identifier,
                 x: e.touches[i].clientX,
                 y: e.touches[i].clientY
             };
@@ -88,19 +100,26 @@ export class TouchGesture extends CallbackManager {
     }
 
     private handleTouchMove(e: TouchEvent) {
-        const {clientX: x2, clientY: y2} = e.touches[0];
-        const {startPoint} = this;
-        if (startPoint.length <= 0) startPoint.push({x: x2, y: y2});
-        const {x: x1, y: y1} = startPoint[0];
+        // 禁用元素内默认滚动事件
+        if (e.cancelable) {
+            if (!e.defaultPrevented) {
+                e.preventDefault();
+            }
+        }
+        e.stopPropagation();
+
+        const {startPoint, toArray} = this;
+        const {x: x1, y: y1, id: id1} = startPoint[0];
+        const touches = toArray(e.touches);
+        const {clientX: x2, clientY: y2} = touches.filter((item: Touch) => item.identifier === id1)[0];
         const moveResult = {x: (x2 - x1) / 100, y: (y2 - y1) / 100};
         this.moveCallback(moveResult, e);
         this.startPoint[0].x = x2;
         this.startPoint[0].y = y2;
 
-        if (e.touches.length < 2) return;
-        const {clientX: x2p, clientY: y2p} = e.touches[1];
-        if (this.startPoint.length <= 1) this.startPoint.push({x: x2p, y: y2p});
-        const {x: x1p, y: y1p} = startPoint[1];
+        if (touches.length < 2) return;
+        const {x: x1p, y: y1p, id: id1p} = startPoint[1];
+        const {clientX: x2p, clientY: y2p} = touches.filter((item: Touch) => item.identifier === id1p)[0];
         const rotateQueue = this.rotateQueue.list();
         if (rotateQueue.length > 0) {
             const oa = {
@@ -123,13 +142,6 @@ export class TouchGesture extends CallbackManager {
 
         this.startPoint[1].x = x2p;
         this.startPoint[1].y = y2p;
-
-        // 禁用元素内默认滚动事件
-        if (e.cancelable) {
-            if (!e.defaultPrevented) {
-                e.preventDefault();
-            }
-        }
     }
 
     constructor(target: HTMLElement) {
@@ -168,24 +180,24 @@ export class TouchGesture extends CallbackManager {
 
     /**
      * 向量夹角
-     * @param {Vector} a
-     * @param {Vector} b
+     * @param {Vector} a oldVector
+     * @param {Vector} b newVector
      * @constructor
      */
     public static VectorAngle(a: Vector, b: Vector) {
-        const {abs, acos} = Math;
-        const x1 = abs(a.direct.x - a.start.x);
-        const y1 = abs(a.direct.y - a.start.y);
-        const x2 = abs(b.direct.x - b.start.x);
-        const y2 = abs(b.direct.y - b.start.y);
+        const x1 = a.direct.x - a.start.x;
+        const y1 = a.direct.y - a.start.y;
+        const x2 = b.direct.x - b.start.x;
+        const y2 = b.direct.y - b.start.y;
         const oa$ob = x1 * x2 + y1 * y2;
         const oa2 = x1 ** 2 + y1 ** 2;
         const ob2 = x2 ** 2 + y2 ** 2;
         const cosOaOb = oa$ob / ((oa2 * ob2) ** 0.5);
         // 角度 = arccos(余弦公式)
-        const angle = acos(cosOaOb);
-        // 方向 = aXb>0 ? 顺时针:逆时针;
-        return (x1 * y2 - x2 * y1) > 0 ? angle : -angle;
+        let angle = Math.acos(cosOaOb);
+
+        // 方向 = aXb>0 ? 逆时针:顺时针;
+        return (x2 * y1 - x1 * y2) > 0 ? -angle : angle;
     }
 }
 
