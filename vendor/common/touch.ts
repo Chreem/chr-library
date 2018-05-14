@@ -1,5 +1,3 @@
-import * as $ from 'jquery'
-
 export type Point = {
     id?: number,
     x: number,

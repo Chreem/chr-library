@@ -1,0 +1,14 @@
+.position(@top, @left, @width) {
+  position: absolute;
+  top: @top/20rem;
+  left: @left/20rem;
+  width: @width/20rem;
+}
+
+.position(@top, @left, @width,@height) when (isnumber(@height)) {
+  position: absolute;
+  top: @top/20rem;
+  left: @left/20rem;
+  width: @width/20rem;
+  height: @height/20rem;
+}

@@ -8,13 +8,25 @@ const Mix = require('./config/webpack.mix');
 const sina = new Mix('./sina/20180504-hgly');
 sina.react('index.js');
 config = sina;
-// url = 'http://n.sinaimg.cn/hb/hbh/';
+url = '//n.sinaimg.cn/hb/hgly/';
 //
 sina.lib({
     'react': 'React',
     'react-dom': 'ReactDOM',
-    // 'swiper': 'Swiper'
+    'swiper': 'Swiper',
+    'jquery': 'jQuery'
 });
+
+
+// const three = new Mix('./sina/20180504-hgly');
+// three.react('index.js');
+// three.lib({
+//     'react': 'React',
+//     'react-dom': 'ReactDOM',
+//     'three': 'THREE'
+// });
+// config = three;
+
 // TODO vendor在css加载上有bug待解决
 // .vendor(['react', 'jquery'], 'common')
 // .vendor();

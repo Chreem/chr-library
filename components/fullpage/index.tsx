@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {ReactNode} from "react";
+import './full.less';
 
 const Swiper = require('swiper/dist/js/swiper.js');
 
@@ -29,6 +30,8 @@ interface FullpagePropsType {
     config?: SwiperOptions,
 
     children: any
+
+    [propsName: string]: any
 }
 
 export default class Fullpage extends React.Component<FullpagePropsType> {
@@ -46,19 +49,24 @@ export default class Fullpage extends React.Component<FullpagePropsType> {
         const {id, config} = this.props;
         this.swiper = new Swiper(
             `#${id}`,
-            Object.assign({}, this.defaultConfig, config)
+            Object.assign({}, this.defaultConfig, config),
         );
         if (!window.swiper) window.swiper = {};
         window.swiper[id] = this.swiper;
     }
 
     render() {
-        let {children, ...otherProps} = this.props;
+        let {children, config, className, ...otherProps} = this.props;
+        className = className || '';
         children = arrayFormat(children) as Array<ReactNode>;
-        return <div {...otherProps} className="swiper-container">
+        return <div {...otherProps} className={`swiper-container ${className}`}>
             <div className="swiper-wrapper">
-                {children.map((item: HTMLElement, index: number) =>
-                    <div key={index} className="swiper-slide">{item}</div>)}
+                {children.map((item: any, index: number) => {
+                    return <div key={index}
+                                className="swiper-slide"
+                                style={item.props['data-scroll'] ? {'overflowY': 'auto'} : {}}
+                    >{item}</div>
+                })}
             </div>
         </div>
     }

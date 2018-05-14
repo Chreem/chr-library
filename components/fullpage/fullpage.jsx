@@ -68,6 +68,7 @@ export default class FullPage extends React.Component {
             {config.downArrow ?
                 <img className="slidetip-down" src={down ? down : require('./down.png')} alt="上划"
                      onClick={this.handleNextSlideClick}/> : ''}
+            <div className="swiper-scrollbar"/>
         </div>
     }
 }

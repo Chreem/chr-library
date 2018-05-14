@@ -23,6 +23,7 @@
     "@types/stats": "^0.16.30",
     "@types/swiper": "^4.2.0",
     "@types/three": "^0.91.10",
+    "@types/webpack-env": "^1.13.6",
     "autoprefixer": "^8.2.0",
     "awesome-typescript-loader": "^5.0.0",
     "babel-loader": "^8.0.0-beta.2",
