@@ -1,16 +1,17 @@
-import React from 'react';
-import PropTypes from 'prop-types'
+import * as React from 'react';
+import * as PropTypes from 'prop-types'
 import {createHashHistory} from 'history'
 import {Form, Button, Checkbox} from 'antd';
-import User from '../../components/user'
+import User from '../../components/user/index'
 import {setAuthority} from '../../utils/authority'
-import './Login.less'
+import './LoginStyle.less'
+import {WrappedFormUtils} from "antd/es/form/Form";
 
 const FormItem = Form.Item;
 const history = createHashHistory();
 const {UserName, Password} = User;
 
-class Login extends React.Component {
+class Login extends React.Component<{ form: WrappedFormUtils }> {
     state = {
         remember: false
     };
@@ -23,7 +24,7 @@ class Login extends React.Component {
         return {form: this.props.form}
     }
 
-    handleLoginSubmit(e) {
+    private handleLoginSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
         this.props.form.validateFields((err, values) => {

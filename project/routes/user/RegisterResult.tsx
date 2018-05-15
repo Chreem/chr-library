@@ -1,9 +1,9 @@
 import * as React from 'react'
-import {Component, Fragment} from 'react'
 import './RegisterResultStyle'
 import {Button, Icon} from 'antd'
 import {createHashHistory} from 'history'
 
+const {Component, Fragment} = React;
 const history = createHashHistory();
 
 type RegisterResultProps = {

@@ -4,7 +4,7 @@ process.env.NODE_ENV === 'development'
 
 import React from 'react'
 import ReactDom from 'react-dom'
-import Root from './app.jsx'
+import Root from './app.tsx'
 
 /**
  * some adapter for hot-loader
@@ -23,8 +23,8 @@ if (process.env.NODE_ENV === 'development') {
     render(Root);
 
     if (module.hot) {
-        module.hot.accept('./app.jsx', () => {
-            const NextRoot = require('./app.jsx').default;
+        module.hot.accept('./app.tsx', () => {
+            const NextRoot = require('./app.tsx').default;
             render(NextRoot)
         })
     }

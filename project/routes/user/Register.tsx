@@ -1,26 +1,37 @@
-import React, {Component} from 'react';
+import * as React from 'react';
 import {Form, Icon, Button, Popover} from 'antd';
-import PropTypes from 'prop-types'
-import './Login.less'
-import UserComponents from '../../components/user'
+import * as PropTypes from 'prop-types'
+import './LoginStyle.less'
+import UserComponents from '../../components/user/index'
 import {createHashHistory} from 'history'
 import {setAuthority} from '../../utils/authority'
+import {WrappedFormUtils} from "antd/es/form/Form";
+import {Simulate} from "react-dom/test-utils";
+import keyDown = Simulate.keyDown;
 
 const history = createHashHistory();
 const FormItem = Form.Item;
 const {UserName, Password, Email, FormInput} = UserComponents;
 
-const initialPasswordState = {
+interface passwordType {
+    length: boolean,
+    number: boolean,
+    character: boolean,
+    uppercase: boolean,
+    visible: boolean,
+    minLength: number,
+}
+
+const initialPasswordState: passwordType = {
     length: false,
     number: false,
     character: false,
     uppercase: false,
     visible: false,
-
     minLength: 8
 };
 
-const PasswordPopoverContent = (props) => {
+const PasswordPopoverContent = (props: passwordType) => {
     return <div>
         length?: {props.length ? 'yes' : 'no'} <br/>
         number?: {props.number ? 'yes' : 'no'} <br/>
@@ -29,14 +40,21 @@ const PasswordPopoverContent = (props) => {
     </div>
 };
 
-class Register extends Component {
+interface RegisterPropsType extends passwordType{
+    form: WrappedFormUtils
+}
+class Register extends React.Component<RegisterPropsType> {
+    static childContextTypes = {
+        form: PropTypes.object
+    };
+
     state = {
         password: initialPasswordState,
     };
 
-    password = '';
+    private password = '';
 
-    constructor(props) {
+    constructor(props:RegisterPropsType) {
         super(props);
 
         this.handleCheckPassword = this.handleCheckPassword.bind(this);
@@ -47,13 +65,11 @@ class Register extends Component {
         return {form: this.props.form}
     }
 
-    handleLoginSubmit(e) {
+    private handleLoginSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                console.log('try to register', values);
-
                 setAuthority('token' + new Date().getTime());
                 history.push('register-result');
             }
@@ -63,12 +79,16 @@ class Register extends Component {
     /**
      * 密码规则
      */
-    handleCheckPassword(rule, val, cb) {
+    private handleCheckPassword(rule: Array<string>, val: string, cb: Function) {
         const tipMessage = 'password should be strong';
-        const passState = Object.assign({}, initialPasswordState);
+        const passState: any = Object.assign({}, initialPasswordState);
         this.setState({password: passState});
-        if (!!val) {passState.visible = true}
-        else {return cb(tipMessage)}
+        if (!!val) {
+            passState.visible = true
+        }
+        else {
+            return cb(tipMessage)
+        }
 
         if (val.length >= passState.minLength) passState.length = true;
         if (/[a-z]/.test(val)) passState.character = true;
@@ -76,11 +96,12 @@ class Register extends Component {
         if (/[0-9]/.test(val)) passState.number = true;
 
         this.password = val;
-        cb(Object.values(passState).indexOf(false) > -1 ? tipMessage : undefined);
+        const values = Object.keys(passState).map(key => passState[key]);
+        cb(values.indexOf(false) > -1 ? tipMessage : undefined);
     }
 
-    handleConfirmPassword(rule, val, cb) {
-        cb(this.password === val ? undefined : 'password not match')
+    private handleConfirmPassword(rule: Array<string>, val: string, cb: Function) {
+        cb(this.password === val ? undefined : 'password not match', '')
     }
 
     render() {
@@ -92,7 +113,7 @@ class Register extends Component {
                      visible={this.state.password.visible}>
                 <Password name="password"
                           rules={[{validator: this.handleCheckPassword,}]}
-                          onChange={({target}) => this.password = target.value}
+                          onChange={({target}: any) => this.password = target.value}
                           placeholder="at least 6 character"/>
             </Popover>
             <Password name="check"
@@ -107,9 +128,5 @@ class Register extends Component {
         </Form>
     }
 }
-
-Register.childContextTypes = {
-    form: PropTypes.object
-};
 
 export default Form.create()(Register);

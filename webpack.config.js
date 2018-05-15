@@ -5,16 +5,17 @@ let url = undefined;
 const Mix = require('./config/webpack.mix');
 
 // TODO 项目目录
-const sina = new Mix('./sina/20180504-hgly');
+const sina = new Mix('./project');
 sina.react('index.js');
 config = sina;
-url = '//n.sinaimg.cn/hb/hgly/';
+// url = '//n.sinaimg.cn/hb/hgly/';
 //
 sina.lib({
-    'react': 'React',
-    'react-dom': 'ReactDOM',
-    'swiper': 'Swiper',
-    'jquery': 'jQuery'
+    // 'react': 'React',
+    // 'react-dom': 'ReactDOM',
+    // 'three': 'THREE'
+    // 'swiper': 'Swiper',
+    // 'jquery': 'jQuery'
 });
 
 
