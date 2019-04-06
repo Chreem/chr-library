@@ -134,11 +134,11 @@ class WebpackConf {
         const { browserSync } = opt;
         this.config.devtool = 'cheap-module-eval-source-map';
         this.config.mode = 'development';
-        this.config.devServer = { host: '0.0.0.0', noInfo: true };
+        this.config.devServer = { host: '0.0.0.0', noInfo: true, disableHostCheck: true };
         if (browserSync) this.config.plugins.push(new BrowserSyncPlugin(
             { host: '0.0.0.0', port: 80, open: false, proxy: 'http://localhost:8080' },
             { reload: false })
-        )
+        );
         else this.config.devServer.port = 80;
         return this.config;
     };
