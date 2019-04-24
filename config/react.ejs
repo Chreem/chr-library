@@ -11,8 +11,8 @@ import Root from '<%- app; %>'
  */
 if (process.env.NODE_ENV === 'development') {
   const {AppContainer} = require('react-hot-loader');
-  const render = Component => {
-    ReactDOM.render(
+  const index = Component => {
+    ReactDOM.index(
       <AppContainer>
         <Component/>
       </AppContainer>,
@@ -20,14 +20,14 @@ if (process.env.NODE_ENV === 'development') {
     );
   };
 
-  render(Root);
+  index(Root);
 
   if (module.hot) {
     module.hot.accept('<%- app; %>', () => {
       const NextRoot = require('<%- app; %>').default;
-      render(NextRoot)
+      index(NextRoot)
     })
   }
 } else {
-  ReactDOM.render(<Root/>, document.getElementById('<%- root; %>'));
+  ReactDOM.index(<Root/>, document.getElementById('<%- root; %>'));
 }

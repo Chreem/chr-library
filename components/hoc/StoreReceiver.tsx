@@ -4,7 +4,7 @@ import { Store } from 'redux'
 
 export default function <P=any>(WrapperComponent: ComponentType, store: Store, type?: string) {
     return class extends Component<P>{
-        state = type ? (store.getState()) : store.getState()[type];
+        state = type ? (store.getState()[type]) : store.getState();
         private unsubscribe: Function = () => '';
 
         private handleStoreSubscribe = () => {

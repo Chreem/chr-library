@@ -1,0 +1,50 @@
+@keyframes tank-level1-move-left {
+  0%, 100% {background-position-x: 100/7%;}
+  50% {background-position-x: 0;}
+}
+@keyframes tank-level2-move-left {
+  0%, 100% {background-position-x: 300/7%;}
+  50% {background-position-x: 200/7%;}
+}
+@keyframes tank-level3-move-left {
+  0%, 100% {background-position-x: 500/7%;}
+  50% {background-position-x: 400/7%;}
+}
+@keyframes tank-level4-move-left {
+  0%, 100% {background-position-x: 100%;}
+  50% {background-position-x: 600/7%;}
+}
+
+.tank {
+  background-size: 800% 400%;
+  &.animating {
+    animation-duration: .3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: steps(1);
+  }
+
+  &.up {background-position-y: 0;}
+  &.right {background-position-y: 100/3%;}
+  &.down {background-position-y: 200/3%;}
+  &.left {background-position-y: 300/3%;}
+
+  &.l1 {background-position-x: 0;}
+  &.l2 {background-position-x: 200/7%;}
+  &.l3 {background-position-x: 400/7%;}
+  &.l4 {background-position-x: 600/7%;}
+
+  &.l1.animating {animation-name: tank-level1-move-left;}
+  &.l2.animating {animation-name: tank-level2-move-left;}
+  &.l3.animating {animation-name: tank-level3-move-left;}
+  &.l4.animating {animation-name: tank-level4-move-left;}
+}
+
+.tank.player1 {background-image: url(../../../images/tank/player1.jpg);}
+.tank.player2 {background-image: url(../../../images/tank/player2.jpg);}
+
+
+.wall {background-size: cover;}
+.wall.normal { background-image: url(../../../images/wall/normal.jpg);}
+.wall.steel {background-image: url(../../../images/wall/steel.jpg);}
+.wall.grass {background-image: url(../../../images/wall/grass.png);}
+.wall.water {background-image: url(../../../images/wall/water.jpg);}

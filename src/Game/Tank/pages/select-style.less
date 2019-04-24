@@ -1,0 +1,20 @@
+.select-player {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  > * {width: 100px;cursor: default;}
+
+  *[class|="player"] {
+    position: relative;
+    &.active::before {
+      position: absolute;
+      top: 5px;
+      left: -15px;
+      width: 10px;
+      height: 10px;
+      background-color: #fff;
+      content: " ";
+    }
+  }
+}

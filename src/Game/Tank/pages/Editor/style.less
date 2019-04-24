@@ -1,0 +1,35 @@
+#editor {
+  display: flex;
+  justify-content: center;
+  .editor-container {
+    overflow: hidden;
+    height: 100vh;
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .options {
+    width: 150px;
+    padding: 35px 20px;
+    background-color: #333333;
+  }
+  .row {display: flex;margin-bottom: 20px;}
+  input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    text-align: center;
+  }
+  input.size {width: 30px;}
+  input.wall {
+    margin-right: 10px;
+    width: 15%;
+    height: 24px;
+    border-bottom: none;
+    opacity: 0.4;
+    cursor: pointer;
+  }
+  .cancel {background-image: url(../../images/wall/cancel.png);}
+  input.wall[checked] {opacity: 1;}
+}
