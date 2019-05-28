@@ -5,7 +5,6 @@ process.env.NODE_ENV === 'development'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Root from './app.tsx'
-
 /**
  * some adapter for hot-loader
  */

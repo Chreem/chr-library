@@ -1,9 +1,13 @@
 .vscode
 .idea
-.firebase
 .DS_Store
+
+.firebase
+.firebaserc
+firebase.json
 
 node_modules
 package-lock.json
 public
 dist
+

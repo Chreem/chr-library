@@ -1,6 +1,6 @@
 import * as React from 'react'
 import {Component, HTMLProps} from 'react'
-import styled from 'styled-components'
+import styled from '@emotion/styled'
 import {SceneObject} from '../types/objects'
 import render from './module/render'
 import game from '../logic'
@@ -14,11 +14,6 @@ interface ComponentPropsType extends HTMLProps<HTMLDivElement> {
 
 class Checkpoint extends Component<ComponentPropsType> {
   state = {objects: game.init(this.props.objects)};
-
-
-  componentDidMount(): void {
-
-  }
 
 
   render() {

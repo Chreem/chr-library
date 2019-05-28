@@ -1,0 +1,105 @@
+@import "../../pages/__public/style/width-breakpoint.less";
+
+.flex-center() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#game_2048 {
+  height: 100vh;
+  font-size: 16px;
+  .is-phone({ font-size: 4vw; });
+  .flex-center();
+  .game-body {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #b3a396;
+    border-radius: 0.2em;
+  }
+  .container {background-color: #333333;}
+
+
+  .game-box {
+    .flex-center();
+    position: absolute;
+    background-color: #c5b8a9;
+    border-radius: 0.2em;
+    transition: all .15s ease-out;
+  }
+
+  .game-box span {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+  }
+
+
+  .record {
+    display: flex;
+    > * {
+      margin: 1em 1.5em;
+      padding: 0.2em;
+      border-radius: 0.2em;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      color: white;
+      font-size: 1.2em;
+      white-space: nowrap;
+      background-color: #b9ada1;
+    }
+    .score::before {content: "Score"}
+    .best::before {content: "Best"}
+    .score::before, .best::before {
+      color: #ece3db;
+      font-size: 1em;
+    }
+  }
+
+  .options {
+    margin-top: -1em;
+    display: flex;
+    > * {
+      margin: 1em 1.5em;
+      padding: 0.2em;
+      border-radius: 0.2em;
+      border: none;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: white;
+      font-size: 1.2em;
+      white-space: nowrap;
+      background-color: #8c7b68;
+    }
+  }
+
+
+  *[class|="b"] {z-index: 10;background-color: #e9c659;}
+  .b-2 {z-index: 1;background-color: #ece3db;}
+  .b-4 {z-index: 2;background-color: #e9dbc3;}
+  .b-8 {z-index: 3;background-color: #e9b381;}
+  .b-16 {z-index: 4;background-color: #e69a70;}
+  .b-32 {z-index: 5;background-color: #ec7f69;}
+  .b-64 {z-index: 6;background-color: #e6664a;}
+  .b-128 {z-index: 7;background-color: #e9ce7e;}
+  .b-256 {z-index: 8;background-color: #e8cc73;}
+  .b-512 {z-index: 9;background-color: #e7c865;}
+
+  .b-2, .b-4 {
+    span {color: #73695f;}
+  }
+  .b-2, .b-4, .b-8, .b-16, .b-32, .b-64 {
+    span {font-size: 2em;}
+  }
+  .b-128, .b-256, .b-512 {
+    span {font-size: 1.7em;}
+  }
+  .b-1024, .b-2048, .b-4096, .b-8192 {
+    span {font-size: 1.4em;}
+  }
+}

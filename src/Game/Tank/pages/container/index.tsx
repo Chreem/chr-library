@@ -1,11 +1,11 @@
 import * as React from 'react'
 import {Component} from 'react'
-import styled from 'styled-components'
 import {bind, throttle} from 'lodash-decorators'
 import './style.less'
 import render from '../module/render'
 import {ObjectType, SceneObject, Wall, WallType} from "../../types/objects";
 import guid from "~vendor/guid";
+import styled from '@emotion/styled'
 
 
 const Container = styled.div<{ size: number }>`
