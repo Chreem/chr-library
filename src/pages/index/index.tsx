@@ -4,7 +4,7 @@ import {createHashHistory} from 'history'
 import './style.less'
 import {useState, useImperativeHandle, useRef, useCallback} from "react";
 import sleep from "~vendor/sleep";
-import allSelects from '../../Game'
+import allSelects from '../../game'
 
 
 const ALL_COUNT = allSelects.length;
@@ -42,12 +42,13 @@ export default () => {
 
   const handleConfirm = useCallback(index => {
     if (clicked) return;
-    setClick(true);
+    const {link, active} = allSelects[index];
     setActive(index);
-    const path = allSelects[index].link;
+    if (!active) return alert('该游戏尚未完成');
+    setClick(true);
     (async () => {
       await sleep(animateTime);
-      history.push(path);
+      history.push(link);
     })();
   }, [clicked]);
 
@@ -57,10 +58,11 @@ export default () => {
   }, [handleConfirm, clicked, active]);
 
 
-  const selects = allSelects.map(({id, name, link, img}, index) => {
+  const selects = allSelects.map(({id, name, link, active: gameActive, img}, index) => {
     let className = 'game ';
     className += index === active ? 'active ' : '';
     className += ((index === active) && clicked) ? 'select' : '';
+    className += gameActive ? '' : ' gray';
     return <div key={id}
                 className={className}
                 onClick={() => handleConfirm(index)}>

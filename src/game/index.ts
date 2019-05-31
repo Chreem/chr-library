@@ -3,7 +3,7 @@ import guid from '~vendor/guid'
 export const enum GAME_ID {
   TANK = 'tank',
   GAME2048 = '2048',
-  MINE_CLEARANCE = 'mine-clearance',
+  MINE_SWEEPING = 'mine-sweeping',
   BRICK_ELIMINATION = 'brick-elimination',
   TETRIS = 'tetris'
 }
@@ -17,11 +17,13 @@ export default [
   }, {
     id: guid(),
     link: `/game?g=${GAME_ID.GAME2048}`,
+    active: true,
     name: '2048',
     img: require('../assets/2048.jpg')
   }, {
     id: guid(),
-    link: `/game?g=${GAME_ID.MINE_CLEARANCE}`,
+    link: `/game?g=${GAME_ID.MINE_SWEEPING}`,
+    active: true,
     name: '扫雷',
     img: require('../assets/mine-clearance.jpg')
   }, {

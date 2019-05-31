@@ -1,0 +1,67 @@
+@import "../../pages/__public/style/width-breakpoint.less";
+
+#game_mine_sweeping {
+  height: 100vh;
+  background-color: #a8a9ad;
+  font-size: 16px;
+  .is-phone({ font-size: 4vw; });
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &, * {user-select: none;}
+
+  .row {
+    display: flex;
+    margin: 0.5em 0;
+  }
+  button {
+    flex: 1;
+    margin: 0.3em 0.7em;
+    padding: 0.3em;
+    font-size: 1em;
+  }
+
+  .game-body {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .game-box {
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: contain;
+    background-position: center center;
+    background-color: #e2e2e2;
+    border-top-color: #f6f6f6;
+    border-left-color: #edeced;
+    border-right-color: #aaaaaa;
+    border-bottom-color: #a3a3a3;
+  }
+
+  .swept:not(.right), .normal:active {background-color: #cccccc;border-color: #cccccc;}
+  .is-mine:not(.right) {
+    background-color: #d53023;
+    border-color: #d53023;
+    background-image: url(../../assets/mine.png);
+  }
+  .flag, .right {background-image: url(../../assets/flag.png);}
+  .wrong { background-image: url(../../assets/close.png), url(../../assets/mine.png); }
+  .game-box span {
+    font-size: 1.5em;
+    font-weight: bold;
+    user-select: none;
+  }
+  .c-1 span {color: #003bf5;}
+  .c-2 span {color: #479d2c;}
+  .c-3 span {color: #eb4025;}
+  .c-4 span {color: #872e8e;}
+  .c-5 span {color: #f08542;}
+  .c-6 span {color: #eb56f7;}
+  .c-7 span {color: #ad4b32;}
+  .c-8 span {color: #a90013;}
+}
