@@ -1,6 +1,7 @@
 import * as React from 'react'
 import {ComponentType, useCallback, useEffect, useRef, useState} from "react";
-import GameLogic, {MineBoxType, Point} from './logic'
+import GameLogic, {MineBoxType} from './logic'
+import {Point} from '../../type'
 
 
 export interface MineSweepingPropsType {

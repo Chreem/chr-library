@@ -1,13 +1,14 @@
 import * as React from 'react'
-import {ComponentType, useEffect, useState} from "react";
-import {TouchEvent, useCallback} from "react";
+import {ComponentType, useEffect, useRef, useState} from "react";
+import {TouchEvent, MouseEvent, useCallback} from "react";
 
 
-interface DirectControlPropsType {
+export interface DirectControlPropsType {
   directKey?: string[],
   fireKey?: string[],
 
 
+  onClick?(e?: MouseEvent): void;
   onTouchStart?(e?: TouchEvent): void;
   onTouchMove?(e?: TouchEvent): void;
   onTouchEnd?(e?: TouchEvent): void;
@@ -76,10 +77,21 @@ export default function <P = any>(Component: ComponentType<{ direct: string, fir
     }, []);
     const handleTouchEnd = useCallback(() => setPadState('normal'), []);
 
+    /**
+     * 手势开火
+     */
+    let clickFireTimer = useRef<number>(null);
+    const handleClick = useCallback(() => {
+      setFireState(true);
+      clearTimeout(clickFireTimer.current);
+      clickFireTimer.current = window.setTimeout(() => setFireState(false), 50);
+    }, []);
+
 
     return <Component {...props}
                       direct={pad}
                       fire={fire}
+                      onClick={handleClick}
                       onTouchStart={handleTouchStart}
                       onTouchMove={handleTouchMove}
                       onTouchEnd={handleTouchEnd}/>;

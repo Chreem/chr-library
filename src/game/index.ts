@@ -34,6 +34,7 @@ export default [
   }, {
     id: guid(),
     link: `/game?g=${GAME_ID.TETRIS}`,
+    active: true,
     name: '俄罗斯方块',
     img: require('../assets/tetris.jpg')
   }

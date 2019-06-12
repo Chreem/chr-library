@@ -1,5 +1,6 @@
 import guid from "~vendor/guid";
 import random from "~vendor/random";
+import {Point} from '../../type'
 
 export interface MineBoxType {
   id?: string,
@@ -10,8 +11,6 @@ export interface MineBoxType {
   swept?: boolean,    // 已扫过
   flag?: 0 | 1 | 2,   // 插旗，1旗，2问号
 }
-
-export type Point = [number, number];
 
 
 export default class MineSweeping {

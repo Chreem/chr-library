@@ -1,10 +1,11 @@
 import * as React from 'react'
 import * as qs from 'query-string'
-import Error404 from '../error/404'
-import Game2048 from '../../game/2048'
-import MineSweeping from '../../game/mine-sweeping'
 import {RouteComponentProps} from 'react-router-dom'
 import {useEffect, useState} from "react";
+import Error404 from '../error/404'
+import Game2048 from '../../game/2048'
+import Tetris from '../../game/tetris'
+import MineSweeping from '../../game/mine-sweeping'
 import {GAME_ID} from '../../game'
 
 
@@ -18,9 +19,11 @@ export default ({location}: RouteComponentProps) => {
         setView(<Game2048/>);
         break;
       case GAME_ID.MINE_SWEEPING:
+        setView(<MineSweeping/>);
+        break;
       case GAME_ID.BRICK_ELIMINATION:
       case GAME_ID.TETRIS:
-        setView(<MineSweeping/>);
+        setView(<Tetris/>);
         break;
       default:
         setView(<Error404/>);
