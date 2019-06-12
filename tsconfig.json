@@ -9,10 +9,10 @@
         "baseUrl": "./",
         "paths": {
             "~components/*": [
-                "components/*"
+                "src/components/*"
             ],
             "~vendor/*": [
-                "vendor/*"
+                "src/vendor/*"
             ]
         }
     }

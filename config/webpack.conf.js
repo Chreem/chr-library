@@ -2,9 +2,13 @@ const fs = require('fs')
   , ejs = require('ejs')
   , path = require('path')
   , rimraf = require('rimraf')
+  , merge = require('webpack-merge')
+  , OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+  , TerserPlugin = require('terser-webpack-plugin')
   , BrowserSyncPlugin = require('browser-sync-webpack-plugin')
-  , ExtractTextPlugin = require('extract-text-webpack-plugin')
-  , HtmlWebpackPlugin = require('html-webpack-plugin');
+  , MiniCssExtractPlugin = require('mini-css-extract-plugin')
+  , HtmlWebpackPlugin = require('html-webpack-plugin')
+;
 
 class WebpackConf {
   basePath = '';
@@ -13,6 +17,12 @@ class WebpackConf {
     output: {},
     plugins: [],
     externals: {},
+    optimization: {
+      minimizer: [],
+      splitChunks: {
+        cacheGroups: {}
+      }
+    },
     module: {
       rules: [
         {test: /\.css$/, loader: ['style-loader', 'css-loader', 'postcss-loader']},
@@ -38,17 +48,20 @@ class WebpackConf {
     this.config.output.path = path.resolve(__dirname, `.${basePath}dist`);
     this.addHtmlPlugin('index.template.html', 'index.html');
     this.addAlias({
-      '~components': path.resolve('./components'),
-      '~vendor': path.resolve('./vendor')
+      '~components': path.resolve('./src/components'),
+      '~vendor': path.resolve('./src/vendor')
     });
   }
 
   /**
    * 各框架添加loader
    */
-  react = (filepath, opt = {tsx: true, filename: 'index.js'}) => {
+  react = (filepath, opt) => {
     const name = this.__getFileName(filepath);
-    const {tsx, filename} = opt;
+    const {tsx, filename} = Object.assign(
+      {tsx: true, filename: 'index.js'},
+      opt
+    );
     const {rules} = this.config.module;
     this.config.entry[name] = this.__pathPrefix(path.join(this.basePath, filename));
     if (!this.__findLoader('a.jsx')) rules.push({test: /\.jsx?$/, loader: 'babel-loader', exclude: /node_modules/});
@@ -64,7 +77,7 @@ class WebpackConf {
       if (err) throw new Error('some error in ejs template');
       fs.writeFileSync(this.basePath + 'index.js', data);
     })
-  }
+  };
 
   /**
    * 附加依赖
@@ -90,7 +103,7 @@ class WebpackConf {
     if (name.constructor === Object) return this.config.resolve.alias = name;
   };
 
-  // 全局变量引用
+  // 全局变量引用loader
   lib = (name, value) => {
     if (name.constructor === String) return this.config.externals[name] = value;
     if (name.constructor === Object) return this.config.externals = name;
@@ -106,14 +119,34 @@ class WebpackConf {
   };
   // 抽离css
   __extractCSS = filename => {
-    const name = filename ? filename : 'style.css';
-    this.__findLoader('a.css').loader = ExtractTextPlugin.extract({
-      fallback: 'style-loader', use: ['css-loader', 'postcss-loader']
+    [TerserPlugin, OptimizeCssAssetsPlugin].map(Plugin => {
+      const isExist = this.config.plugins.filter(item => item.constructor === Plugin).length > 0;
+      if (isExist) return;
+      this.config.plugins.push(new Plugin({}));
     });
-    this.__findLoader('a.less').loader = ExtractTextPlugin.extract({
-      fallback: 'style-loader', use: ['css-loader', 'postcss-loader', 'less-loader']
-    });
-    this.config.plugins.push(new ExtractTextPlugin(name));
+    this.config.optimization.splitChunks.cacheGroups['styles'] = {
+      name: 'styles',
+      test: /\.css$/,
+      chunks: 'all',
+      enforce: true
+    };
+    this.config.plugins.push(new MiniCssExtractPlugin({filename}));
+    const cssLoader = this.__findLoader('a.css');
+    cssLoader.loader = undefined;
+    cssLoader.use = [
+      MiniCssExtractPlugin.loader,
+      'css-loader',
+      'postcss-loader'
+    ];
+    const lessLoader = this.__findLoader('a.less');
+    lessLoader.loader = undefined;
+    lessLoader.use = [
+      MiniCssExtractPlugin.loader,
+      'css-loader',
+      'postcss-loader',
+      'less-loader'
+    ];
+    return this.config;
   };
   // 由路径获取文件名
   __getFileName = path => path.slice(path.lastIndexOf('/') + 1, path.lastIndexOf('.'));
@@ -136,21 +169,31 @@ class WebpackConf {
    */
   dev = (opt = {browserSync: true}) => {
     const {browserSync} = opt;
-    this.config.devtool = 'cheap-module-eval-source-map';
-    this.config.mode = 'development';
-    this.config.devServer = {host: '0.0.0.0', noInfo: true, disableHostCheck: true};
-    if (browserSync) this.config.plugins.push(new BrowserSyncPlugin(
-      {host: '0.0.0.0', port: 80, open: false, proxy: 'http://localhost:8080'},
-      {reload: false})
-    );
-    else this.config.devServer.port = 80;
-    this.config.resolve.alias['react-dom'] = '@hot-loader/react-dom';
-    return this.config;
+    const config = {
+      devtool: 'cheap-module-eval-source-map',
+      mode: 'development',
+      devServer: {
+        host: '0.0.0.0',
+        noInfo: true,
+        port: browserSync ? 8080 : 80,
+        disableHostCheck: true
+      },
+      plugins: browserSync ? [new BrowserSyncPlugin(
+        {host: '0.0.0.0', port: 80, open: false, proxy: 'http://localhost:8080'},
+        {reload: false}
+      )] : null,
+      resolve: {alias: {'react-dom': '@hot-loader/react-dom'}}
+    };
+
+    return merge(this.config, config);
   };
 
-  prod = (publicPath, opt = {extractCSS: true, removeOld: true, version: true}) => {
+  prod = (publicPath, opt) => {
     this.config.mode = 'production';
-    const {extractCSS, removeOld, version} = opt;
+    const {extractCSS, removeOld, version} = Object.assign(
+      {extractCSS: true, removeOld: true, version: true},
+      opt);
+    this.config.optimization.minimizer = [new TerserPlugin({})];
     const outputPath = this.config.output.path;
     if (version) {
       this.__versionControl();
